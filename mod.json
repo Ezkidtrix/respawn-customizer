@@ -1,0 +1,33 @@
+{
+	"geode": "5.8.2",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
+	},
+	"id": "ezkidtrix.startpos-respawn",
+	"name": "Startpos Respawn Customizer",
+	"version": "v1.0.0",
+	"developer": "Ezkidtrix",
+	"description": "",
+	"dependencies": {
+		"geode.node-ids": ">=v1.23.3"
+	},
+	"settings": {
+		"enabled": {
+			"name": "Enable Mod",
+			"type": "bool",
+			"default": true
+		},
+		"default-time": {
+			"name": "Default Time",
+			"description": "Default respawn time for levels using start positions (in milliseconds) (seconds * 1000)",
+			"type": "int",
+			"default": 1000,
+			"min": 0,
+			"max": 10000,
+			"enable-if": "enabled"
+		}
+	}
+}
