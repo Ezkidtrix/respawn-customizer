@@ -6,6 +6,7 @@
 #include <Geode/utils/cocos.hpp>
 #include <Geode/utils/general.hpp>
 
+#include <cvolton.level-id-api/include/EditorIDs.hpp>
 #include <matjson.hpp>
 
 using namespace geode::prelude;
@@ -19,7 +20,7 @@ static Settings settings;
 struct RespawnTime {
   bool enabled = false;
 
-  int id = 1;
+  std::string id;
   int time = 1000;
 };
 
@@ -28,8 +29,8 @@ struct matjson::Serialize<RespawnTime> {
   static Result<RespawnTime> fromJson(matjson::Value const& val) {
     GEODE_UNWRAP_INTO(bool enabled, val["enabled"].asBool());
 
-    GEODE_UNWRAP_INTO(int id, val["id"].asInt());
     GEODE_UNWRAP_INTO(int time, val["time"].asInt());
+    GEODE_UNWRAP_INTO(std::string id, val["id"].asString());
     
     return Ok(RespawnTime{ enabled, id, time });
   }
@@ -47,7 +48,9 @@ struct matjson::Serialize<RespawnTime> {
 
 std::string getLevelKey(GJGameLevel* level) {
   if (!level) return "";
-  std::string key = std::to_string(level->m_levelID.value());
+
+  int id = (level->m_levelID > 0) ? level->m_levelID.value() : EditorIDs::getID(level);
+  std::string key = std::to_string(id);
 
   if (level->m_levelType == GJLevelType::Main) key += "-local";
   if (level->m_levelType == GJLevelType::Editor) key += "-editor";
@@ -58,7 +61,7 @@ std::string getLevelKey(GJGameLevel* level) {
 }
 
 RespawnTime getRespawnTime(GJGameLevel* level) {
-  return Mod::get()->getSavedValue<RespawnTime>(getLevelKey(level), RespawnTime{ false, 1, settings.defaultTime });
+  return Mod::get()->getSavedValue<RespawnTime>(getLevelKey(level), RespawnTime{ false, getLevelKey(level), settings.defaultTime });
 }
 
 class RespawnPopup : public geode::Popup {
@@ -147,20 +150,14 @@ public:
 class $modify(MyPlayLayer, PlayLayer) {
   void destroyPlayer(PlayerObject* player, GameObject* object) {
     PlayLayer::destroyPlayer(player, object);
-    log::info("player destroyed called!");
-    
     if (!player->m_startPosition.x && !player->m_startPosition.y) return;
-    log::info("player is at startpos!");
 
     auto respawnTime = getRespawnTime(m_level);
     float time = respawnTime.time / 1000.f;
 
     if (respawnTime.enabled && player->m_isDead && !m_hasCompletedLevel) {
-      log::info("enabled, attempting respawn!");
-
       auto delay = CCDelayTime::create(time);
       auto callback = cocos::CallFuncExt::create([this]() {
-        log::info("specified time passed, resetting!");
         resetLevel();
       });
 
@@ -189,7 +186,7 @@ class $modify(MyPauseLayer, PauseLayer) {
   void setupButton() {
     if (!settings.enabled || !m_fields->m_menu) return;
 
-    auto spr = ButtonSprite::create("AD");
+    auto spr = ButtonSprite::create("RS");
     auto btn = CCMenuItemSpriteExtra::create(spr, this, menu_selector(MyPauseLayer::openPopup));
 
     btn->setID("respawn-btn"_spr);

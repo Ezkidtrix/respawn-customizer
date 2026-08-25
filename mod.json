@@ -10,9 +10,10 @@
 	"name": "Startpos Respawn Customizer",
 	"version": "v1.0.0",
 	"developer": "Ezkidtrix",
-	"description": "",
+	"description": "allows changing start position respawn times",
 	"dependencies": {
-		"geode.node-ids": ">=v1.23.3"
+		"geode.node-ids": ">=v1.23.3",
+		"cvolton.level-id-api": ">=2.0.0"
 	},
 	"settings": {
 		"enabled": {
