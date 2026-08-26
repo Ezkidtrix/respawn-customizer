@@ -6,11 +6,11 @@
 		"mac": "2.2081",
 		"ios": "2.2081"
 	},
-	"id": "ezkidtrix.startpos-respawn",
-	"name": "Startpos Respawn Customizer",
+	"id": "ezkidtrix.respawn-customizer",
+	"name": "Respawn Customizer",
 	"version": "v1.0.0",
 	"developer": "Ezkidtrix",
-	"description": "allows changing start position respawn times",
+	"description": "allows changing respawn time per-level",
 	"dependencies": {
 		"geode.node-ids": ">=v1.23.3",
 		"cvolton.level-id-api": ">=2.0.0"
@@ -23,7 +23,7 @@
 		},
 		"default-time": {
 			"name": "Default Time",
-			"description": "Default respawn time for levels using start positions (in milliseconds) (seconds * 1000)",
+			"description": "Default respawn time for all levels (milliseconds = seconds * 1000)",
 			"type": "int",
 			"default": 1000,
 			"min": 0,

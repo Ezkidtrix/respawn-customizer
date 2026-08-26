@@ -148,22 +148,33 @@ public:
 };
 
 class $modify(MyPlayLayer, PlayLayer) {
+  struct Fields {
+    bool m_respawn = false;
+  };
+
   void destroyPlayer(PlayerObject* player, GameObject* object) {
     PlayLayer::destroyPlayer(player, object);
-    if (!player->m_startPosition.x && !player->m_startPosition.y) return;
+    if (!settings.enabled) return;
 
     auto respawnTime = getRespawnTime(m_level);
     float time = respawnTime.time / 1000.f;
 
-    if (respawnTime.enabled && player->m_isDead && !m_hasCompletedLevel) {
+    if (respawnTime.enabled && !m_fields->m_respawn && player->m_isDead && !m_hasCompletedLevel) {
+      m_fields->m_respawn = true;
+
       auto delay = CCDelayTime::create(time);
       auto callback = cocos::CallFuncExt::create([this]() {
-        resetLevel();
+        this->resetLevel();
       });
 
       auto sequence = CCSequence::create(delay, callback, nullptr);
       this->runAction(sequence);
     }
+  }
+
+  void resetLevel() {
+    PlayLayer::resetLevel();
+    m_fields->m_respawn = false;
   }
 };
 
