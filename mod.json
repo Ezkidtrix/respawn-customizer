@@ -11,9 +11,13 @@
 	"version": "v1.0.0",
 	"developer": "Ezkidtrix",
 	"description": "allows different respawn times for levels",
+	"tags": ["cheat", "content", "customization", "enhancement", "gameplay"],
 	"dependencies": {
 		"geode.node-ids": ">=v1.23.3",
 		"cvolton.level-id-api": ">=2.0.0"
+	},
+	"links": {
+		"source": "https://github.com/Ezkidtrix/respawn-customizer"
 	},
 	"settings": {
 		"enabled": {
