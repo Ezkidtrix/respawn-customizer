@@ -27,7 +27,7 @@
 		},
 		"default-time": {
 			"name": "Default Time",
-			"description": "Default respawn time for all levels (ms) (ms = seconds * 1000)",
+			"description": "Default respawn time for all levels (ms) (ms = seconds × 1000)",
 			"type": "int",
 			"default": 1000,
 			"min": 0,
