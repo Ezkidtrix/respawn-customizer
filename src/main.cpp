@@ -13,7 +13,7 @@ using namespace geode::prelude;
 
 struct Settings {
   bool enabled = true;
-  int defaultTime = 750;
+  int defaultTime = 1000;
 };
 static Settings settings;
 
