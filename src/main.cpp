@@ -63,7 +63,7 @@ std::string getLevelKey(GJGameLevel* level) {
 }
 
 RespawnTime getRespawnTime(GJGameLevel* level) {
-  return Mod::get()->getSavedValue<RespawnTime>(getLevelKey(level), RespawnTime{ false, getLevelKey(level), settings.defaultTime });
+  return Mod::get()->getSavedValue<RespawnTime>(getLevelKey(level), RespawnTime{ settings.enableDefault, getLevelKey(level), settings.defaultTime });
 }
 
 class RespawnPopup : public geode::Popup {
