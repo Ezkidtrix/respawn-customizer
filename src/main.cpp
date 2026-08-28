@@ -1,24 +1,26 @@
 #include <Geode/Geode.hpp>
+#include <Geode/loader/SettingV3.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
 
-#include <Geode/loader/SettingV3.hpp>
 #include <Geode/utils/cocos.hpp>
 #include <Geode/utils/general.hpp>
-
 #include <cvolton.level-id-api/include/EditorIDs.hpp>
+
 #include <matjson.hpp>
 
 using namespace geode::prelude;
 
 struct Settings {
   bool enabled = true;
+
   int defaultTime = 1000;
+  bool enableDefault = false;
 };
 static Settings settings;
 
 struct RespawnTime {
-  bool enabled = false;
+  bool enabled = settings.enableDefault;
 
   std::string id;
   int time = 1000;
@@ -214,7 +216,9 @@ class $modify(MyPauseLayer, PauseLayer) {
 
 $on_mod(Loaded) {
   settings.enabled = Mod::get()->getSettingValue<bool>("enabled");
+
   settings.defaultTime = Mod::get()->getSettingValue<int>("default-time");
+  settings.enableDefault = Mod::get()->getSettingValue<bool>("enable-default");
 
   listenForSettingChanges<bool>("enabled", [](bool value) {
     settings.enabled = value;
@@ -222,5 +226,8 @@ $on_mod(Loaded) {
 
   listenForSettingChanges<int>("default-time", [](int value) {
     settings.defaultTime = value;
+  });
+  listenForSettingChanges<bool>("enable-default", [](bool value) {
+    settings.enableDefault = value;
   });
 };

@@ -25,14 +25,24 @@
 			"type": "bool",
 			"default": true
 		},
+		"options-title": {
+			"type": "title",
+			"name": "Mod Options"
+		},
 		"default-time": {
 			"name": "Default Time",
 			"description": "Default respawn time for all levels (ms) (ms = seconds × 1000)",
 			"type": "int",
 			"default": 1000,
 			"min": 0,
-			"max": 10000,
+			"max": 60000,
 			"enable-if": "enabled"
+		},
+		"enable-default": {
+			"name": "Enabled By Default",
+			"description": "Enables modifying the respawn time by default, meaning you don't have to manually check the box in game.",
+			"type": "bool",
+			"default": false
 		}
 	}
 }
