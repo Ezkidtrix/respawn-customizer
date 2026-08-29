@@ -162,8 +162,6 @@ class $modify(MyPlayLayer, PlayLayer) {
     float time = respawnTime.time / 1000.f;
 
     if (respawnTime.enabled && !m_fields->m_respawn && player->m_isDead && !m_hasCompletedLevel) {
-      m_fields->m_respawn = true;
-
       auto delay = CCDelayTime::create(time);
       auto callback = cocos::CallFuncExt::create([this]() {
         this->resetLevel();
@@ -172,11 +170,13 @@ class $modify(MyPlayLayer, PlayLayer) {
       auto sequence = CCSequence::create(delay, callback, nullptr);
       this->runAction(sequence);
     }
+
+    m_fields->m_respawn = false;
   }
 
   void resetLevel() {
     PlayLayer::resetLevel();
-    m_fields->m_respawn = false;
+    m_fields->m_respawn = true;
   }
 };
 
