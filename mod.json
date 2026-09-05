@@ -1,5 +1,5 @@
 {
-	"geode": "5.9.0",
+	"geode": "5.10.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2081",
@@ -8,7 +8,7 @@
 	},
 	"id": "ezkidtrix.respawn-customizer",
 	"name": "Respawn Customizer",
-	"version": "v1.0.3",
+	"version": "v1.1.0",
 	"developer": "Ezkidtrix",
 	"description": "allows different respawn times for levels",
 	"tags": ["cheat", "content", "customization", "enhancement", "gameplay"],
