@@ -166,13 +166,19 @@ class $modify(MyPlayLayer, PlayLayer) {
 
       auto delay = CCDelayTime::create(time);
       auto callback = cocos::CallFuncExt::create([this]() {
-        this->resetLevel();
         m_fields->m_respawn = false;
+        
+        this->resetLevel();
+        this->startMusic();
       });
 
       auto sequence = CCSequence::create(delay, callback, nullptr);
       this->runAction(sequence);
     }
+  }
+
+  void resetLevel() {
+    if (!m_fields->m_respawn) PlayLayer::resetLevel();
   }
 };
 
