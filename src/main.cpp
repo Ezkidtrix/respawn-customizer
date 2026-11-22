@@ -5,7 +5,7 @@
 
 #include <Geode/utils/cocos.hpp>
 #include <Geode/utils/general.hpp>
-#include <cvolton.level-id-api/include/EditorIDs.hpp>
+#include <cvolton.level-id-api/EditorIDs.hpp>
 
 #include <matjson.hpp>
 
