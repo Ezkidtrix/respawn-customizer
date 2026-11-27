@@ -6,6 +6,9 @@ on:
     branches:
       - "**"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
@@ -48,6 +51,8 @@ jobs:
     needs: ['build']
 
     steps:
+      - uses: actions/checkout@v7
+
       - uses: geode-sdk/build-geode-mod/combine@main
         id: build
 
@@ -73,5 +78,5 @@ jobs:
         with:
           tag_name: ${{ steps.mod_info.outputs.version }}
           name: ${{ steps.mod_info.outputs.version }}
-          body: ${{ github.event.head_commit.message }}
-          files: ${{ steps.build.outputs.build-output }}/*.geode
+          body: ${{ steps.mod_info.outputs.message }}
+          files: ${{ steps.build.outputs.build-output }}
