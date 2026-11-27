@@ -65,7 +65,10 @@ jobs:
         id: mod_info
         run: |
           MOD_JSON=$(find . -maxdepth 3 -name "mod.json" | head -n 1)
+          GEODE_FILE=$(find . -maxdepth 4 -name "*.geode" | head -n 1)
+          echo "Found .geode file: $GEODE_FILE"
           echo "version=$(jq -r '.version' "$MOD_JSON")" >> $GITHUB_OUTPUT
+          echo "geode_file=$GEODE_FILE" >> $GITHUB_OUTPUT
           {
             echo 'message<<EOF'
             git log -1 --pretty=%B
@@ -79,4 +82,5 @@ jobs:
           tag_name: ${{ steps.mod_info.outputs.version }}
           name: ${{ steps.mod_info.outputs.version }}
           body: ${{ steps.mod_info.outputs.message }}
-          files: ${{ steps.build.outputs.build-output }}
+          files: ${{ steps.mod_info.outputs.geode_file }}
+          fail_on_unmatched_files: true
