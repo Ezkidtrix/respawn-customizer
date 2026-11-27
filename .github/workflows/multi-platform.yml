@@ -55,3 +55,16 @@ jobs:
         with:
           name: Build Output
           path: ${{ steps.build.outputs.build-output }}
+
+      - name: Get mod version
+        id: mod_info
+        run: echo "version=$(jq -r '.version' mod.json)" >> $GITHUB_OUTPUT
+
+      - name: Upload to Release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.mod_info.outputs.version }}
+          name: ${{ steps.mod_info.outputs.version }}
+          body: ${{ github.event.head_commit.message }}
+          files: ${{ steps.build.outputs.build-output }}/*.geode
