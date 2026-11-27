@@ -1,5 +1,5 @@
 {
-	"geode": "6.0.0-beta.1",
+	"geode": "6.0.0",
 	"gd": {
 		"win": "2.2091",
 		"android": "2.2091",
@@ -18,6 +18,9 @@
 	},
 	"links": {
 		"source": "https://github.com/Ezkidtrix/respawn-customizer"
+	},
+	"resources": {
+		"sprites": ["resources/respawn_btn.png"]
 	},
 	"settings": {
 		"enabled": {

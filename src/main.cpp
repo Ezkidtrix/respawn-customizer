@@ -1,7 +1,9 @@
 #include <Geode/Geode.hpp>
 #include <Geode/loader/SettingV3.hpp>
+
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
+#include <Geode/ui/BasedButtonSprite.hpp>
 
 #include <Geode/utils/cocos.hpp>
 #include <Geode/utils/general.hpp>
@@ -191,24 +193,35 @@ class $modify(MyPauseLayer, PauseLayer) {
     PauseLayer::customSetup();
     if (!settings.enabled) return;
 
-    m_fields->m_menu = this->getChildByID("left-button-menu");
+    m_fields->m_menu = this->m_mainLayer->getChildByID("left-button-menu");
     if (!m_fields->m_menu) return;
 
     this->setupButton();
-    m_fields->m_menu->updateLayout();
   }
 
   void setupButton() {
     if (!settings.enabled || !m_fields->m_menu) return;
 
-    auto spr = ButtonSprite::create("RS");
-    auto btn = CCMenuItemSpriteExtra::create(spr, this, menu_selector(MyPauseLayer::openPopup));
+    auto bgSpr = CCSprite::createWithSpriteFrameName("GJ_plainBtn_001.png");
+    auto btnSpr = CCSprite::create("respawn_btn.png"_spr);
+    if (!bgSpr || !btnSpr) return;
 
-    btn->setID("respawn-btn"_spr);
-    auto options = AxisLayoutOptions::create()->setScaleLimits(0.6f, 1.0f);
+    btnSpr->setScale(0.25f);
+    btnSpr->setPosition(bgSpr->getContentSize() / 2);
 
-    btn->setLayoutOptions(options);
+    bgSpr->addChild(btnSpr);
+    bgSpr->setScale(0.575f);
+
+    auto btn = CCMenuItemSpriteExtra::create(
+      bgSpr, nullptr, this, menu_selector(MyPauseLayer::openPopup)
+    );
+    if (!btn) return;
+
+    btn->setID("respawn-options-btn");
+    btn->setZOrder(-1);
+
     m_fields->m_menu->addChild(btn);
+    m_fields->m_menu->updateLayout();
   }
 
   void openPopup(CCObject* sender) {
