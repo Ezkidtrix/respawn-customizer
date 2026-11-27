@@ -82,5 +82,5 @@ jobs:
           tag_name: ${{ steps.mod_info.outputs.version }}
           name: ${{ steps.mod_info.outputs.version }}
           body: ${{ steps.mod_info.outputs.message }}
-          files: ${{ steps.mod_info.outputs.geode_file }}
+          files: ${{ steps.build.outputs.build-output }}
           fail_on_unmatched_files: true
