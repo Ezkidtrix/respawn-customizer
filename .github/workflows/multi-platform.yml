@@ -58,7 +58,14 @@ jobs:
 
       - name: Get mod version
         id: mod_info
-        run: echo "version=$(jq -r '.version' mod.json)" >> $GITHUB_OUTPUT
+        run: |
+          MOD_JSON=$(find . -maxdepth 3 -name "mod.json" | head -n 1)
+          echo "version=$(jq -r '.version' "$MOD_JSON")" >> $GITHUB_OUTPUT
+          {
+            echo 'message<<EOF'
+            git log -1 --pretty=%B
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
       - name: Upload to Release
         if: github.ref == 'refs/heads/main'
